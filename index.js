@@ -2,38 +2,98 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 const generatePage = require('./utils/generateMarkDown');
-
 // TODO: Create an array of questions for user input
 const questions = () => {  
-    return inquirer.prompt([
-    {
-      type: 'input',
-      name: 'title',
-      message: 'What is the title of your project? (Required)',
-      validate: titleInput => {
-        if (titleInput) {
-          return true;
-        } else {
-          console.log('Please enter your project title!');
-          return false;
-        }
+  return inquirer.prompt([
+  {
+    type: 'input',
+    name: 'title',
+    message: 'What is the title of your project? (Required)',
+    validate: titleInput => {
+      if (titleInput) {
+        return true;
+      } else {
+        console.log('Please enter your project title.');
+        return false;
       }
-    },
-    {
-      type: 'input',
-      name: 'description',
-      message: 'Enter a description of your project. (Required)',
-      validate: describeInput => {
-        if (describeInput) {
-          return true;
-        } else {
-          console.log('Please enter a project description.');
-          return false;
-        }
-      }   
     }
-    ]);   
+  },
+  {
+    type: 'input',
+    name: 'description',
+    message: 'Enter a description of your project. (Required)',
+    validate: describeInput => {
+      if (describeInput) {
+        return true;
+      } else {
+        console.log('Please enter a project description.');
+        return false;
+      }
+    }   
+  },
+  {
+    type: 'input',
+    name: 'install',
+    message: 'Enter the installation instructions.'
+  },
+  { type: 'input',
+    name: 'usage',
+    message: 'Enter the usage information.'
+  },
+  {
+    type: 'input',
+    name: 'guide',
+    message: 'Enter the contribution guidelines.'
+  },
+  { 
+    type: 'input',
+    name: 'test',
+    message: 'Enter the test instructions.'
+  },
+  {
+    type: 'checkbox',
+    name: 'license',
+    message: 'Choose the license type for the application. (One selection is required.)',
+    choices: ['MIT','mystery','homebrew','bogus']
+  },
+  {
+    type: 'input',
+    name: 'gitname',
+    message: 'Provide your github user name. (Required)',
+    validate: githubInput => {
+      if (githubInput) {
+        return true;
+      } else {
+        console.log('Please enter your github user name.');
+        return false;
+      }
+    }
+  },
+  {
+    type: 'input',
+    name: 'email',
+    message: 'Provide your e-mail address. (Required)',
+    validate: mailInput => {
+      if (mailInput.includes("@")) {
+        return true;
+      } else {
+        console.log('Please enter a valid e-mail address.');
+        return false;
+      }
+    }
+  }  
+  ]);  
 };  // questions
+
+const makeAnswers = (queries) => {
+      
+  let answerArray = queries;
+  console.log("in function MAKEANSWERS");
+  console.log(answerArray);
+  return answerArray;
+
+};  // end makeAnswers
+
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
@@ -52,8 +112,9 @@ function writeToFile(fileName, data) {
     });
 }; // end function writeToFile
 
+
 // TODO: Create a function to initialize app
-function init() {
+function init () {
     // instruct the user
     console.log(`
         =========================================================
@@ -70,7 +131,12 @@ function init() {
 // Function call to initialize app
 init();
 questions()
-    .then(generatePage)             
+    .then (getAnswers => {
+        return makeAnswers(getAnswers);
+    })
+    .then (makeFile => {
+        return generatePage(makeFile);
+    })
     .then(fileContent => {
         return writeToFile('./dist/README.md', fileContent);
     })
