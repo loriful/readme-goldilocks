@@ -2,6 +2,7 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 const generatePage = require('./utils/generateMarkDown');
+
 // TODO: Create an array of questions for user input
 const questions = () => {  
   return inquirer.prompt([
@@ -54,7 +55,7 @@ const questions = () => {
     type: 'checkbox',
     name: 'license',
     message: 'Choose the license type for the application. (One selection is required.)',
-    choices: ['MIT','mystery','homebrew','bogus']
+    choices: ['Apache','GNU','MIT','BSD 2','BSD 3','Boost','Creative Commons','Eclipse','Mozilla','Unlicense']
   },
   {
     type: 'input',
@@ -84,15 +85,6 @@ const questions = () => {
   }  
   ]);  
 };  // questions
-
-const makeAnswers = (queries) => {
-      
-  let answerArray = queries;
-  console.log("in function MAKEANSWERS");
-  console.log(answerArray);
-  return answerArray;
-
-};  // end makeAnswers
 
 
 // TODO: Create a function to write README file
@@ -131,11 +123,8 @@ function init () {
 // Function call to initialize app
 init();
 questions()
-    .then (getAnswers => {
-        return makeAnswers(getAnswers);
-    })
     .then (makeFile => {
-        return generatePage(makeFile);
+    return generatePage(makeFile);
     })
     .then(fileContent => {
         return writeToFile('./dist/README.md', fileContent);
@@ -146,7 +135,6 @@ questions()
     .catch(err => {
         console.log(err);
     });
-
 
 ////////////////////////////
 // ORIGINAL
