@@ -33,6 +33,7 @@ function renderLicenseSection(license) {
 
   return `
   ## **License**
+  
   Licensed under the [${license}] license.
   ${renderLicenseLink(license)}
   `;
@@ -44,7 +45,9 @@ function generateMarkdown(data) {
   
   return `
   # **${data.title}**
+  <p align="right">
   ${renderLicenseBadge(data.license)}
+  </p>
  
   ## **Description**
   ${data.description}
@@ -68,8 +71,8 @@ function generateMarkdown(data) {
   ## **Questions**
   ### Github Profile:  https://github.com/${data.gitname}
   
-  ### E-mail:  ${data.email}
-  Please send e-mail to the above address with any questions.
+  ### You may contact ${data.email} with any questions related to this repository.
+  
   ${renderLicenseSection(data.license)}
   `;
 }
