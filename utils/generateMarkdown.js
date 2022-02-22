@@ -1,54 +1,75 @@
 // TODO: Create a function that returns a license badge based on which license is passed in
 // If there is no license, return an empty string
 function renderLicenseBadge(license) {
-  if (license) {
-    return `
-    [![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC_BY--NC--ND_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
-    `;
+  
+  if (!license.toString()) {
+    return ``;      // no license was passed in
   };
 
-    // return "[![License](https://img."+ license +".io/badge/License-EPL_1.0-red.svg)](https://opensource.org/licenses/"+ license +")";
+  // build license badge for markup and return
   
-  return ``;
-
+  return `[![License](https://img.shields.io/badge/License-${convertChars(license)}-orange.svg)]${renderLicenseLink(license)}`;
+ 
 } // end function renderLicenseBadge
 
 // TODO: Create a function that returns the license link
 // If there is no license, return an empty string
 function renderLicenseLink(license) {
-  if (!license) {
+
+  switch (license.toString()) {
+    case "Apache-2.0":
+    case "BSD-2-Clause":
+    case "BSD-3-Clause":
+    case "Eclipse":
+    case "MIT":
+      return `(https://opensource.org/licenses/${license})`;
+    case "Mozilla":
+      return `(https://opensource.org/licenses/MPL-2.0)`;
+    case "Creative Commons":
+      return `(https://creativecommons.org/licenses/by/4.0/)`;
+    case "GNU":
+      return `(https://www.gnu.org/licenses/)`;
+    default:        // no license provided or matched   
     return ``;
-  }
-
-  return `placeholder for license link`;
-
+  } // switch
+    
 }; // end function renderLicenseLink
 
 // TODO: Create a function that returns the license section of README
 // If there is no license, return an empty string
 function renderLicenseSection(license) {
-  if (!license) {
+
+  if (!license.toString()) {
     return ``;
   }
 
   return `
   ## **License**
   
-  Licensed under the [${license}] license.
-  ${renderLicenseLink(license)}
+  ### Licensed under the [${license}]${renderLicenseLink(license)} license.
+  
   `;
   
 }; // end function renderLicenseSection
+
+// function to format strings for badge build
+function convertChars(license) {
+  
+  license = license.toString();
+  license = license.replace("-", "%20");      // replace the first hyphen
+  license = license.replace(" ", "%20");      // replace any spaces
+  return license.replace("-", "--");          // double the hyphens
+
+}; // end function convertChars
 
 // TODO: Create a function to generate markdown for README
 function generateMarkdown(data) {
   
   return `
   # **${data.title}**
-  <p align="right">
-  ${renderLicenseBadge(data.license)}
-  </p>
- 
+  
+  ${renderLicenseBadge(data.license)}         
+  
   ## **Description**
   ${data.description}
  
@@ -61,7 +82,7 @@ function generateMarkdown(data) {
   - [Questions](#questions)
   - [License](#license)
   ## **Installation**
-  -  ${data.install}
+  - ${data.install}
   ## **Usage**
   - ${data.usage}
   ## **Contributing**

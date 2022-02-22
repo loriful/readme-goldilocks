@@ -8,9 +8,9 @@ const questions = () => {
   return inquirer.prompt([
   {
     type: 'input',
-    name: 'title',
+    name: 'title',        
     message: 'What is the title of your project? (Required)',
-    validate: titleInput => {
+    validate: titleInput => {       // required field
       if (titleInput) {
         return true;
       } else {
@@ -23,7 +23,7 @@ const questions = () => {
     type: 'input',
     name: 'description',
     message: 'Enter a description of your project. (Required)',
-    validate: describeInput => {
+    validate: describeInput => {      // required field
       if (describeInput) {
         return true;
       } else {
@@ -55,13 +55,13 @@ const questions = () => {
     type: 'checkbox',
     name: 'license',
     message: 'Choose the license type for the application. (One selection is required.)',
-    choices: ['Apache','GNU','MIT','BSD 2','BSD 3','Boost','Creative Commons','Eclipse','Mozilla','Unlicense']
+    choices: ['Apache-2.0','BSD-2-Clause','BSD-3-Clause','Creative Commons','Eclipse','GNU','MIT','Mozilla']
   },
   {
     type: 'input',
     name: 'gitname',
     message: 'Provide your github user name. (Required)',
-    validate: githubInput => {
+    validate: githubInput => {        // required field
       if (githubInput) {
         return true;
       } else {
@@ -75,7 +75,7 @@ const questions = () => {
     name: 'email',
     message: 'Provide your e-mail address. (Required)',
     validate: mailInput => {
-      if (mailInput.includes("@")) {
+      if (mailInput.includes("@")) {        // check validity
         return true;
       } else {
         console.log('Please enter a valid e-mail address.');
@@ -97,8 +97,8 @@ function writeToFile(fileName, data) {
                 return;
             }
             resolve({
-                ok: true,
-                message: 'Your README was successfully created at this location: ' + fileName
+                ok: true,           // tell the user where the file is
+                message: '\n \n ======================================== \n Your README was successfully created at this location: ' + fileName + '\n \n ========================================'
             });
         });
     });
@@ -121,34 +121,17 @@ function init () {
 };  // end function init
 
 // Function call to initialize app
-init();
-questions()
+init();                  // prompt the user with directions
+questions()             // get the README information from user
     .then (makeFile => {
-    return generatePage(makeFile);
+    return generatePage(makeFile);      // create the markdown
     })
-    .then(fileContent => {
+    .then(fileContent => {              // generate the readme
         return writeToFile('./dist/README.md', fileContent);
     })
-    .then(writeFileResponse => {
+    .then(writeFileResponse => {        // inform user where the file is
         console.log(writeFileResponse.message);
     })
-    .catch(err => {
+    .catch(err => {                     // display error, if any
         console.log(err);
     });
-
-////////////////////////////
-// ORIGINAL
-// TODO: Include packages needed for this application
-
-// TODO: Create an array of questions for user input
-// const questions = [];
-
-// TODO: Create a function to write README file
-// function writeToFile(fileName, data) {}
-
-// TODO: Create a function to initialize app
-// function init() {}
-
-// Function call to initialize app
-// init();
-//////////////////////////////////////

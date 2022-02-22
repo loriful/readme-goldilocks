@@ -1,13 +1,10 @@
 
-  # **Run Superman**
-  <p align="right">
+  # **README Generator**
   
-    [![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC_BY--NC--ND_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
-    
-  </p>
- 
+           
+  
   ## **Description**
-  its a good project with lots of friends
+  Command-line application that dynamically generates a professional README.md file from a user's input using the Inquirer package.
  
   ## **Table of Contents**
   - [Description](#description)
@@ -18,22 +15,17 @@
   - [Questions](#questions)
   - [License](#license)
   ## **Installation**
-  -  load it, take off cape, iron it, put it back on
+  - Requires NPM and the Inquirer package.  A "dist" directory is required at the root level to accept the automatically generated README.md file. 
   ## **Usage**
-  - ask Lois
+  - Run the application from the command line using the command "node index".  Enter the required information at the prompts.
   ## **Contributing**
-  - any help appreciated
+  - Contribute via Github.
   ## **Tests**
-  - put on cape, jump off building
+  - Run the application as many times as required.  Each run replaces the current README in the "dist" directory.
   ## **Questions**
   ### Github Profile:  https://github.com/loriful
   
   ### You may contact tiptonica@gmail.com with any questions related to this repository.
   
-  
-  ## **License**
-  
-  Licensed under the [MIT] license.
-  placeholder for license link
   
   
